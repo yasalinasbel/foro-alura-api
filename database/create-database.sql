@@ -23,6 +23,7 @@ CREATE TABLE topic (
 	creation_date TIMESTAMP NOT NULL,
 	topic_status VARCHAR (20) NOT NULL,
 	course VARCHAR(30) NOT NULL,
+	delete_topic TINYINT NOT NULL,
 	FOREIGN KEY(id_user) REFERENCES user_data(id),
 	PRIMARY KEY(id)
 )Engine=InnoDB;
