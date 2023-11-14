@@ -1,5 +1,9 @@
 package com.foro.api;
 
+import com.foro.api.topic.Course;
+import com.foro.api.topic.TopicDTO;
+import com.foro.api.topic.TopicStatus;
+import com.foro.api.topic.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -8,7 +12,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @SpringBootTest
 public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
 
@@ -17,7 +20,7 @@ public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
 
     @Test
     @Transactional
-    void testCreateTopic() {
+    void testTopicCRUD() {
 
         String title = "What means Spring";
         String message = "I dont understand the difference between Spring and SpringBoot";
@@ -38,8 +41,7 @@ public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
                 .build();
 
         TopicDTO topic = topicRepository.save(topicInformation);
-        TopicDTO topicInformationInitial=new TopicDTO(topicInformation.getId(), idUser,title,message,creationDate,topicStatus,course,deleted);
-
+        TopicDTO topicInitialInformation=new TopicDTO(topicInformation.getId(), idUser,title,message,creationDate,topicStatus,course,deleted);
 
         String titleModified = "What means SpringBoot";
         String messageModified = "I dont understand the difference between Spring and SpringBoot";
@@ -61,7 +63,7 @@ public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
 
         topicRepository.save(topicToBeModified);
         Assert.assertEquals(topicToBeModified.getTitle(),"What means SpringBoot");
-        assertEqualsTopic(topicInformationInitial, topicToBeModified);
+        assertEqualsTopic(topicInitialInformation, topicToBeModified);
 
         topicRepository.deleteById(topicToBeModified.getId());
         boolean topicDeleted=topicRepository.findById(topicToBeModified.getId()).isEmpty();

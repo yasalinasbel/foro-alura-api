@@ -1,4 +1,4 @@
-package com.foro.api;
+package com.foro.api.topic;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,9 +26,4 @@ public class TopicDTO {
     @Enumerated(EnumType.STRING)
     private Course course;
     private boolean deleted;
-
-
-
-
-
 }

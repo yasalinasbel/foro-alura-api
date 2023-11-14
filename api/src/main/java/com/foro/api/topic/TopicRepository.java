@@ -1,4 +1,4 @@
-package com.foro.api;
+package com.foro.api.topic;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
