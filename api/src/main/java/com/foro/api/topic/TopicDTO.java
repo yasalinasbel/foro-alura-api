@@ -25,5 +25,5 @@ public class TopicDTO {
     private TopicStatus topicStatus;
     @Enumerated(EnumType.STRING)
     private Course course;
-    private boolean deleted;
+    private Boolean deleted;
 }

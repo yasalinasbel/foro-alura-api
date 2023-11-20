@@ -1,4 +1,4 @@
-package com.foro.api.reply;
+package com.foro.api.topic;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
         private Integer idUser;
         private Integer idTopic;
         private String reply;
-        private LocalDateTime creationDateReplay;
+        private LocalDateTime creationDateReply;
 
     }
 
