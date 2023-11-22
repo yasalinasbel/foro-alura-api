@@ -1,15 +1,24 @@
 package com.foro.api.topic;
 
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 import java.time.LocalDateTime;
+
     @Table(name="reply")
     @Entity
     @Getter
     @Setter
     @NoArgsConstructor
-   @AllArgsConstructor
+    @AllArgsConstructor
     @EqualsAndHashCode(of="id")
     @Builder(toBuilder = true)
     public class ReplyDTO{

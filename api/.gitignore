@@ -34,4 +34,4 @@ build/
 .idea/
 
 ### TestNG ###
-.test-output
+../test-output/*

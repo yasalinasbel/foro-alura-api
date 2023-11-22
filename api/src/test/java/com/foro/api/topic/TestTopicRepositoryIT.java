@@ -23,7 +23,7 @@ public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
 
     @Test
     @Rollback(value = false)
-//@Rollback(false) se utiliza para especificar que no se debe realizar un rollback al final de la transacción, permitiendo que los cambios en la base de datos persistan
+    //@Rollback(false) se utiliza para especificar que no se debe realizar un rollback al final de la transacción, permitiendo que los cambios en la base de datos persistan
     @Transactional
     void testTopicCRUD() {
 
