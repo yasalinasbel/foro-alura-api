@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test name="/home/andre/IntelliJ-Workspace/foro-alura-api">
+        <classes>
+            <class name="com.foro.api.topic.TestReplyRepositoryIT" />
+            <class name="com.foro.api.topic.TestTopicRepositoryIT" />
+        </classes>
+    </test>
+</suite>
