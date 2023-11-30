@@ -1,5 +1,6 @@
 package com.foro.api.service;
 
+
 import com.foro.api.topic.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +12,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 @SpringBootTest
-public class TestTopicReplyService extends AbstractTestNGSpringContextTests {
+public class TopicReplyServiceTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private TopicReplyService topicReplyService;
 
@@ -238,8 +239,29 @@ public class TestTopicReplyService extends AbstractTestNGSpringContextTests {
 
         Reply replyInitialInformation1 = topicReplyService.saveReply(replyInformation);
 
-        boolean replyDeleted = topicReplyService.deleteReply(replyInitialInformation1);
+        boolean replyDeleted = topicReplyService.deleteReply(replyInitialInformation1.getId());
         Assert.assertTrue(replyDeleted);
+    }
 
+    @Test
+    @Rollback(value = true)
+    @Transactional
+    public void testIdTopicNull() {
+        String title = "What means GitHub";
+        Integer idUser = 2;
+        String message = "I dont understand the difference between Git and GitHub";
+        Course course = Course.GITHUB;
+
+        Topic topicInformation = Topic.builder()
+                .title(title)
+                .idUser(idUser)
+                .message(message)
+                .course(course)
+                .build();
+
+        Topic topicInitialInformation = topicReplyService.saveTopic(topicInformation);
+        Assert.assertThrows(IllegalArgumentException.class,() ->
+        {topicReplyService.topicById(100);
+        });
     }
 }

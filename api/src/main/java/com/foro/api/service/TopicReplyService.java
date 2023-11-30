@@ -8,29 +8,37 @@ import com.foro.api.topic.TopicStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class TopicReplyService {
     @Autowired
-    private TopicRepository topicRepository;
+    private final TopicRepository topicRepository;
+
     @Autowired
-    private ReplyRepository replyRepository;
+    private final ReplyRepository replyRepository;
+    public TopicReplyService(TopicRepository topicRepository, ReplyRepository replyRepository) {
+        this.topicRepository = topicRepository;
+        this.replyRepository = replyRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public Topic topicById(Integer id) {
+        TopicDTO topicDTO = topicRepository.findById(id).orElse(null);
+        if(topicDTO!=null){
+            Topic topicById = Topic.from(topicDTO);
+            return topicById;
+        }else{
+            throw new IllegalArgumentException("Ingrese un id válido");
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<Topic> topicList() {
         List<TopicDTO> topicDTOList = topicRepository.findAll();
         List<Topic> topicList = topicDTOList.stream().map(topicDTO -> Topic.from(topicDTO)).collect(Collectors.toList());
         return topicList;
-    }
-
-    @Transactional(readOnly = true)
-    public Topic topicById(Integer id) {
-        TopicDTO topicDTO = topicRepository.findById(id).orElse(null);
-        Topic topicById = Topic.from(topicDTO);
-        return topicById;
     }
 
     @Transactional
@@ -58,8 +66,12 @@ public class TopicReplyService {
     @Transactional(readOnly = true)
     public Reply replyById(Integer id) {
         ReplyDTO replyDTO = replyRepository.findById(id).orElse(null);
-        Reply replyById = Reply.fromReply(replyDTO);
-        return replyById;
+        if(replyDTO!=null){
+            Reply replyById = Reply.fromReply(replyDTO);
+            return replyById;
+        }else{
+            throw new IllegalArgumentException("Ingrese un id válido");
+        }
     }
 
     @Transactional
@@ -76,46 +88,50 @@ public class TopicReplyService {
     }
 
     @Transactional
-    public boolean deleteReply(Reply reply) {
-        validateReply(reply);
-        ReplyDTO replyToDeleteById = replyRepository.getReferenceById(reply.getId());
-        replyToDeleteById.setDeletedReply(true);
-
-        return replyToDeleteById.getDeletedReply();
+    public boolean deleteReply(Integer id) {
+        ReplyDTO replyToDeleteById = replyRepository.getReferenceById(id);
+        if(replyToDeleteById!=null) {
+            replyToDeleteById.setDeletedReply(true);
+            return replyToDeleteById.getDeletedReply();
+        }else{
+            throw new IllegalArgumentException("Ingrese un id válido");
+        }
     }
 
     @Transactional
     public Reply updateReply(Reply replyService) {
         validateReply(replyService);
         String reply = replyService.getReply();
+        Integer idReply = replyService.getId();
 
-        ReplyDTO replyById = replyRepository.getReferenceById(replyService.getId());
-        replyById.setReply(reply);
-        replyById.setCreationDateReply(LocalDateTime.now());
-        replyById.setDeletedReply(false);
-
-        Reply replyUpdated = Reply.fromReply(replyById);
-
-        return replyUpdated;
+        if (idReply!=null) {
+            ReplyDTO replyById = replyRepository.getReferenceById(idReply);
+            replyById.setReply(reply);
+            Reply replyUpdated = Reply.fromReply(replyById);
+            return replyUpdated;
+        }else{
+            throw new IllegalArgumentException("The id "+idReply+ "must be a valid number");
+        }
     }
 
-    public void validateTopic(Topic topic){
+    private void validateTopic(Topic topic){
+
         String title=topic.getTitle();
         String message= topic.getMessage();
 
-        if(title==null){
-            throw new IllegalArgumentException("Title was null");
+        if(title==null || title.isBlank()){
+            throw new IllegalArgumentException("Please add a valid title");
         }
-        if(message==null){
-            throw new IllegalArgumentException("Message was null");
+        if(message==null || message.isBlank()){
+            throw new IllegalArgumentException("Please add a valid message");
         }
     }
 
-    public void validateReply(Reply replyToValidate){
+    private void validateReply(Reply replyToValidate){
         String reply=replyToValidate.getReply();
 
-        if(reply==null){
-            throw new IllegalArgumentException("Title was null");
+        if(reply==null|| reply.isBlank()){
+            throw new IllegalArgumentException("Please add a valid reply");
         }
     }
 

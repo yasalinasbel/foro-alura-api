@@ -36,6 +36,4 @@ public class TopicDTO {
     @Enumerated(EnumType.STRING)
     private Course course;
     private Boolean deleted;
-
-
 }

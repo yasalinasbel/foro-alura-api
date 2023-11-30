@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
-public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
+public class TopicRepositoryITTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private TopicRepository topicRepository;
