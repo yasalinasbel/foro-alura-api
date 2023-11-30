@@ -35,6 +35,7 @@ CREATE TABLE reply (
 	reply VARCHAR (200) NOT NULL,
     id_topic INT,
     creation_date_reply TIMESTAMP NOT NULL,
+    deleted_reply TINYINT NOT NULL,
 	FOREIGN KEY(id_topic) REFERENCES topic(id),
 	FOREIGN KEY(id_user) REFERENCES user_data(id),
 	PRIMARY KEY(id)

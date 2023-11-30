@@ -5,6 +5,7 @@
 //surfire es importante en el pom para que mvn pueda ejecutar los test, permite identificar y ejecutar pruebas
 //no puedo ubicar en carpetas diferentes los repositorios porque o sino cuando voya a hacer test no los detecta spring. Deben estar junto a la clase ApiApplication que tiene la notación @SpringBootApplication que es útil para identificar los repositorios
 package com.foro.api.topic;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -83,7 +84,7 @@ public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
         String message = "I dont understand the difference between Java and Python";
         LocalDateTime creationDate = LocalDateTime.parse("2022-05-04T12:30:00.859762975");
         TopicStatus topicStatus = TopicStatus.CLOSED;
-        Integer idUser = 4;
+        Integer idUser = 3;
         Course course = Course.JAVA;
         Boolean deleted = false;
 
@@ -103,7 +104,7 @@ public class TestTopicRepositoryIT extends AbstractTestNGSpringContextTests {
         String message2 = "I dont know how to reply the questions in the page";
         LocalDateTime creationDate2 = LocalDateTime.parse("2023-04-04T03:30:00.859762975");
         TopicStatus topicStatus2 = TopicStatus.CLOSED;
-        Integer idUser2 = 7;
+        Integer idUser2 = 2;
         Course course2 = Course.OTHER;
         Boolean deleted2 = false;
 
