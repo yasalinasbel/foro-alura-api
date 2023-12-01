@@ -76,6 +76,10 @@ public class ReplyRepositoryITTest extends AbstractTestNGSpringContextTests {
         replyRepository.deleteById(replyToBeModified.getId());
         boolean replyDeleted = replyRepository.findById(replyToBeModified.getId()).isEmpty();
         Assert.assertTrue(replyDeleted);
+
+        topicRepository.deleteById(topic.getId());
+        boolean topicDeleted =topicRepository.findById(topic.getId()).isEmpty();
+        Assert.assertTrue(topicDeleted);
     }
     private void assertEqualsTopic(ReplyDTO replyToBeCompared, ReplyDTO replyWhoComparesTo) {
         Assert.assertEquals(replyToBeCompared.getIdTopic(), replyWhoComparesTo.getIdTopic());
@@ -150,5 +154,6 @@ public class ReplyRepositoryITTest extends AbstractTestNGSpringContextTests {
         topicRepository.deleteById(topicInitialInformation.getId());
         boolean topicDeleted = topicRepository.findById(topicInitialInformation.getId()).isEmpty();
         Assert.assertTrue(topicDeleted);
+
     }
 }

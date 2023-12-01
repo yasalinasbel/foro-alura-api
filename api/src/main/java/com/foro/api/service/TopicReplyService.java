@@ -5,7 +5,6 @@ import com.foro.api.reply.ReplyRepository;
 import com.foro.api.topic.TopicDTO;
 import com.foro.api.topic.TopicRepository;
 import com.foro.api.topic.TopicStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -13,11 +12,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class TopicReplyService {
-    @Autowired
     private final TopicRepository topicRepository;
-
-    @Autowired
     private final ReplyRepository replyRepository;
+
     public TopicReplyService(TopicRepository topicRepository, ReplyRepository replyRepository) {
         this.topicRepository = topicRepository;
         this.replyRepository = replyRepository;
@@ -25,13 +22,9 @@ public class TopicReplyService {
 
     @Transactional(readOnly = true)
     public Topic topicById(Integer id) {
-        TopicDTO topicDTO = topicRepository.findById(id).orElse(null);
-        if(topicDTO!=null){
-            Topic topicById = Topic.from(topicDTO);
-            return topicById;
-        }else{
-            throw new IllegalArgumentException("Ingrese un id válido");
-        }
+        TopicDTO topicDTO = topicRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Please enter a valid id"));
+        Topic topicById = Topic.from(topicDTO);
+        return topicById;
     }
 
     @Transactional(readOnly = true)
@@ -65,13 +58,9 @@ public class TopicReplyService {
 
     @Transactional(readOnly = true)
     public Reply replyById(Integer id) {
-        ReplyDTO replyDTO = replyRepository.findById(id).orElse(null);
-        if(replyDTO!=null){
-            Reply replyById = Reply.fromReply(replyDTO);
-            return replyById;
-        }else{
-            throw new IllegalArgumentException("Ingrese un id válido");
-        }
+        ReplyDTO replyDTO = replyRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("Please enter a valid Id"));
+        Reply replyById = Reply.fromReply(replyDTO);
+        return replyById;
     }
 
     @Transactional
@@ -89,13 +78,9 @@ public class TopicReplyService {
 
     @Transactional
     public boolean deleteReply(Integer id) {
-        ReplyDTO replyToDeleteById = replyRepository.getReferenceById(id);
-        if(replyToDeleteById!=null) {
-            replyToDeleteById.setDeletedReply(true);
-            return replyToDeleteById.getDeletedReply();
-        }else{
-            throw new IllegalArgumentException("Ingrese un id válido");
-        }
+        ReplyDTO replyToDeleteById = replyRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("Please enter a valid Id"));
+        replyToDeleteById.setDeletedReply(true);
+        return replyToDeleteById.getDeletedReply();
     }
 
     @Transactional
@@ -104,14 +89,10 @@ public class TopicReplyService {
         String reply = replyService.getReply();
         Integer idReply = replyService.getId();
 
-        if (idReply!=null) {
-            ReplyDTO replyById = replyRepository.getReferenceById(idReply);
-            replyById.setReply(reply);
-            Reply replyUpdated = Reply.fromReply(replyById);
-            return replyUpdated;
-        }else{
-            throw new IllegalArgumentException("The id "+idReply+ "must be a valid number");
-        }
+        ReplyDTO replyById = replyRepository.findById(idReply).orElseThrow(() ->new IllegalArgumentException("The id "+idReply+ "must be a valid number"));
+        replyById.setReply(reply);
+        Reply replyUpdated = Reply.fromReply(replyById);
+        return replyUpdated;
     }
 
     private void validateTopic(Topic topic){
