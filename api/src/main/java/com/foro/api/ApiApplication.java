@@ -1,4 +1,4 @@
-package com.foro.api.topic;
+package com.foro.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

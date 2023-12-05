@@ -1,4 +1,4 @@
-package com.foro.api.topic;
+package com.foro.api.reply;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
