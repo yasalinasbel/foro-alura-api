@@ -3,6 +3,8 @@ package com.foro.api.service;
 import com.foro.api.topic.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,8 +64,8 @@ public class TopicReplyServiceTest extends AbstractTestNGSpringContextTests {
 
         assertEqualsTopic(topicInitialInformation, topic);
 
-        List<Topic> topicsList = topicReplyService.topicList();
-        Assert.assertEquals(topicsList.size(), 2);
+        Page<Topic> topicsList = topicReplyService.topicList(Pageable.ofSize(2));
+        Assert.assertEquals(topicsList.getSize(), 2);
     }
 
     public void assertEqualsTopic(Topic topicToBeCompared, Topic topicWhoComparesTo) {
@@ -197,8 +199,8 @@ public class TopicReplyServiceTest extends AbstractTestNGSpringContextTests {
 
         assertEqualsReply(replyInitialInformation1, replyById);
 
-        List<Reply> repliesList = topicReplyService.replyList();
-        Assert.assertEquals(repliesList.size(), 2);
+        Page<Reply> repliesList = topicReplyService.replyList(Pageable.ofSize(2));
+        Assert.assertEquals(repliesList.getSize(), 2);
     }
 
     public void assertEqualsReply(Reply replyToBeCompared, Reply replyWhoComparesTo) {

@@ -15,9 +15,7 @@ public class Reply {
         private Integer id;
         @NotBlank
         private String reply;
-        @NotBlank
         private Integer idUser;
-        @NotBlank
         private Integer idTopic;
 
         public static Reply fromReply(ReplyDTO replyDTO) {
