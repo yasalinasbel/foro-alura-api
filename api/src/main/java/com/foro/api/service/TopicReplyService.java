@@ -5,11 +5,11 @@ import com.foro.api.reply.ReplyRepository;
 import com.foro.api.topic.TopicDTO;
 import com.foro.api.topic.TopicRepository;
 import com.foro.api.topic.TopicStatus;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicReplyService {
@@ -29,9 +29,9 @@ public class TopicReplyService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Topic> topicList(Pageable pagination) {
-        Page<TopicDTO> topicDTOList = topicRepository.findAll(pagination);
-        Page<Topic> topicList = topicDTOList.map(topicDTO -> Topic.from(topicDTO));
+    public List<Topic> topicList() {
+        List<TopicDTO> topicDTOList = topicRepository.findAll();
+        List<Topic> topicList = topicDTOList.stream().map(topicDTO -> Topic.from(topicDTO)).collect(Collectors.toList());
         return topicList;
     }
 
@@ -51,9 +51,9 @@ public class TopicReplyService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Reply> replyList(Pageable pagination) {
-        Page<ReplyDTO> replyDTOList=replyRepository.findByDeletedReplyFalse(pagination);
-        Page<Reply> replyList=replyDTOList.map(replyDTO -> Reply.fromReply(replyDTO));
+    public List<Reply> replyList() {
+        List<ReplyDTO> replyDTOList=replyRepository.findByDeletedReplyFalse();
+        List<Reply> replyList=replyDTOList.stream().map(replyDTO -> Reply.fromReply(replyDTO)).collect(Collectors.toList());
         return replyList;
     }
 
