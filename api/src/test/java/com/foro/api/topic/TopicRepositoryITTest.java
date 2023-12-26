@@ -123,7 +123,7 @@ public class TopicRepositoryITTest extends AbstractTestNGSpringContextTests {
         List<TopicDTO> topics = topicRepository.findAll();
         Assert.assertEquals(topics.size(), 2);
 
-        topicRepository.deleteById(topic.getId());
+       topicRepository.deleteById(topic.getId());
         topicRepository.deleteById(topic2.getId());
 
         boolean idTopicDeleted = topicRepository.findById(topic.getId()).isEmpty();

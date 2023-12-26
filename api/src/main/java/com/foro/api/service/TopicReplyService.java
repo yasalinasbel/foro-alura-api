@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class TopicReplyService {
     private final TopicRepository topicRepository;
@@ -51,7 +52,7 @@ public class TopicReplyService {
 
     @Transactional(readOnly = true)
     public List<Reply> replyList() {
-        List<ReplyDTO> replyDTOList=replyRepository.findAll();
+        List<ReplyDTO> replyDTOList=replyRepository.findByDeletedReplyFalse();
         List<Reply> replyList=replyDTOList.stream().map(replyDTO -> Reply.fromReply(replyDTO)).collect(Collectors.toList());
         return replyList;
     }

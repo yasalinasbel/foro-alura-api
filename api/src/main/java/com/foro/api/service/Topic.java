@@ -18,7 +18,6 @@ public class Topic {
     private Integer id;
     @NotBlank
     private String title;
-    @NotBlank
     private Integer idUser;
     @NotBlank
     private String message;
