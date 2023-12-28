@@ -1,4 +1,4 @@
-package com.foro.api.controller;
+package com.foro.test.functional.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -94,6 +94,11 @@
 						<version>3.2.2</version>
 					</dependency>
 				</dependencies>
+				<configuration>
+					<includes>
+						<include>com/foro/api/**</include>
+					</includes>
+				</configuration>
 			</plugin>
         </plugins>
 	</build>
